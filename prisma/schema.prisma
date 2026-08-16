@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Lead {
+  id               String   @id @default(uuid())
+  name             String
+  email            String
+  phone            String?
+  service_interest String?
+  message          String
+  source           String   @default("CONTACT_FORM")
+  status           String   @default("NEW")
+  created_at       DateTime @default(now())
+
+  email_logs EmailLog[]
+
+  @@map("LEAD")
+}
+
+model EmailLog {
+  id        String   @id @default(uuid())
+  lead_id   String?
+  booking_id String?
+  template  String   
+  recipient String
+  status    String   
+  sent_at   DateTime @default(now())
+
+  lead Lead? @relation(fields: [lead_id], references: [id])
+  booking Booking? @relation(fields: [booking_id], references: [id])
+
+  @@map("EMAIL_LOG")
+}
+
+model AdminUser {
+  id             String      @id @default(uuid())
+  email          String      @unique
+  password_hash  String
+  email_verified Boolean     @default(false)
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+
+  auth_tokens    AuthToken[]
+
+  @@map("ADMIN_USER")
+}
+
+model AuthToken {
+  id            String    @id @default(uuid())
+  admin_user_id String
+  token_hash    String
+  type          String    // "VERIFY" | "RESET"
+  expires_at    DateTime
+  used_at       DateTime?
+  created_at    DateTime  @default(now())
+
+  admin_user    AdminUser @relation(fields: [admin_user_id], references: [id])
+
+  @@map("AUTH_TOKEN")
+}
+
+model Service {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  duration    Int       @default(30) // in minutes
+  is_active   Boolean   @default(true)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+
+  bookings    Booking[]
+
+  @@map("SERVICE")
+}
+
+model AvailabilitySlot {
+  id          String    @id @default(uuid())
+  slot_date   DateTime  // Just the date (YYYY-MM-DD at midnight)
+  start_time  DateTime  // Exact start time
+  end_time    DateTime  // Exact end time
+  is_blocked  Boolean   @default(false)
+  created_by  String?   // AdminUser ID
+  created_at  DateTime  @default(now())
+
+  booking     Booking?
+
+  @@map("AVAILABILITY_SLOT")
+}
+
+model Booking {
+  id                  String           @id @default(uuid())
+  availability_slot_id String?         @unique
+  service_id          String
+  visitor_name        String
+  visitor_email       String
+  visitor_phone       String?
+  visitor_company_name String?
+  visitor_website     String?
+  visitor_business    String?
+  visitor_timezone    String           @default("UTC")
+  notes               String?
+  status              String           @default("CONFIRMED") // CONFIRMED, CANCELLED, COMPLETED
+  created_at          DateTime         @default(now())
+  updated_at          DateTime         @updatedAt
+
+  slot                AvailabilitySlot? @relation(fields: [availability_slot_id], references: [id])
+  service             Service          @relation(fields: [service_id], references: [id])
+  tokens              BookingToken[]
+  email_logs          EmailLog[]
+
+  @@map("BOOKING")
+}
+
+model BookingToken {
+  id          String   @id @default(uuid())
+  booking_id  String
+  token_hash  String
+  purpose     String   // "CANCEL" | "RESCHEDULE"
+  expires_at  DateTime?
+  used_at     DateTime?
+  created_at  DateTime @default(now())
+
+  booking     Booking  @relation(fields: [booking_id], references: [id])
+
+  @@map("BOOKING_TOKEN")
+}
+
+model BlogPost {
+  id              String    @id @default(uuid())
+  title           String
+  slug            String    @unique
+  content         String    
+  excerpt         String?
+  cover_image     String?   
+  is_published    Boolean   @default(false)
+  published_at    DateTime?
+  
+  seo_title       String?
+  seo_description String?
+  seo_keywords    String?
+  seo_schema      String?
+
+  
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  @@map("BLOG_POST")
+}

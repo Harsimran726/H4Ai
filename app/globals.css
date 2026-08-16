@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-sora: var(--font-sora);
+  --font-playfair: var(--font-playfair);
+  
+  --color-ivory: #F6F4EE;
+  --color-warm-grey: #E7E3D8;
+  --color-indigo: #4B3FA8;
+  --color-gold: #A9812F;
+  --color-charcoal: #161821;
+  --color-muted-grey: #8A8A80;
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+}
+
+:root {
+  --background: #F6F4EE; /* Ivory White */
+  --foreground: #161821; /* Charcoal */
+  --card: #E7E3D8; /* Warm Grey */
+  --card-foreground: #161821;
+  --popover: #F6F4EE;
+  --popover-foreground: #161821;
+  --primary: #4B3FA8; /* Deep Indigo */
+  --primary-foreground: #FFFFFF;
+  --secondary: #A9812F; /* Antique Gold */
+  --secondary-foreground: #FFFFFF;
+  --muted: #E7E3D8;
+  --muted-foreground: #8A8A80;
+  --accent: #E7E3D8;
+  --accent-foreground: #4B3FA8;
+  --destructive: #B3453A; /* from design.md */
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(231, 227, 216, 0.5);
+  --input: rgba(231, 227, 216, 0.5);
+  --ring: #4B3FA8;
+  --radius: 0.8rem; /* ~12px radius */
+}
+
+/* Dark mode is disabled for v1 per PRD, but we provide a fallback using the same values to avoid flashes */
+.dark {
+  --background: #F6F4EE;
+  --foreground: #161821;
+  --card: #E7E3D8;
+  --card-foreground: #161821;
+  --popover: #F6F4EE;
+  --popover-foreground: #161821;
+  --primary: #4B3FA8;
+  --primary-foreground: #FFFFFF;
+  --secondary: #A9812F;
+  --secondary-foreground: #FFFFFF;
+  --muted: #E7E3D8;
+  --muted-foreground: #8A8A80;
+  --accent: #E7E3D8;
+  --accent-foreground: #4B3FA8;
+  --destructive: #B3453A;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(231, 227, 216, 0.5);
+  --input: rgba(231, 227, 216, 0.5);
+  --ring: #4B3FA8;
+  --radius: 0.8rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
