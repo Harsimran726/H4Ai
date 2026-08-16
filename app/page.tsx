@@ -5,6 +5,7 @@ import { SectionCard } from "@/components/marketing/section-card";
 import { ProofStats } from "@/components/marketing/proof-stats";
 import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { Brain, Code, Share2, Video, Workflow, PhoneCall, CheckCircle } from "lucide-react";
 import { Metadata } from "next";
 
@@ -142,8 +143,8 @@ export default function Home() {
               </ul>
             </div>
             <div className="flex-1">
-              <div className="aspect-video bg-muted rounded-2xl border border-border flex items-center justify-center">
-                 <p className="text-muted-foreground/50 font-sora uppercase tracking-widest text-sm">H4Ai Operations</p>
+              <div className="aspect-video bg-muted rounded-2xl border border-border flex items-center justify-center overflow-hidden">
+                 <Image src="/team.png" alt="H4Ai Team" width={800} height={450} className="w-full h-full object-cover" />
               </div>
             </div>
           </div>

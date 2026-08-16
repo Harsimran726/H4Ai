@@ -39,6 +39,9 @@ export const metadata: Metadata = {
       { rel: 'manifest', url: '/site.webmanifest' },
     ],
   },
+  openGraph: {
+    images: ['/og-image.webp'],
+  },
 };
 
 export default function RootLayout({

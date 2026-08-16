@@ -223,7 +223,7 @@ function BlogEditor() {
                           "legalName": "H4Ai AI Development & Integration",
                           "url": "https://h4ai.in",
                           "logo": "https://h4ai.in/logo.png",
-                          "image": "https://h4ai.in/og-image.jpg",
+                          "image": "https://h4ai.in/og-image.webp",
                           "description": "AI consultancy, infrastructure, and creative systems for ambitious businesses — building AI voice agents, agentic AI systems, premium websites, and social media growth.",
                           "slogan": "Run your business. We handle the rest.",
                           "founder": { "@id": "https://h4ai.in/#founder" },
