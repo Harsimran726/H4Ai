@@ -1,14 +1,7 @@
 import 'dotenv/config';
-import { PrismaClient } from '../app/generated/prisma/client';
 import bcrypt from 'bcryptjs';
 
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
-
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+import { prisma } from '../lib/db';
 
 async function main() {
   const email = 'contact@h4ai.in';
@@ -54,5 +47,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-    pool.end();
   });

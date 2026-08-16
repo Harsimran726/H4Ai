@@ -1,7 +1,21 @@
 import { MetadataRoute } from 'next'
+import { prisma } from '@/lib/db'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://h4ai.in';
+
+  // Fetch all published blog posts
+  const posts = await prisma.blogPost.findMany({
+    where: { is_published: true },
+    select: { slug: true, updated_at: true },
+  });
+
+  const blogRoutes = posts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.updated_at,
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }));
 
   const routes = [
     '',
@@ -13,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/services/agentic-ai-systems',
     '/about',
     '/contact',
+    '/blog',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -20,5 +35,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  return routes;
+  return [...routes, ...blogRoutes];
 }

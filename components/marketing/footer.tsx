@@ -12,7 +12,7 @@ export function Footer() {
               <span
                 className="font-sora font-bold text-2xl"
                 style={{
-                  background: "linear-gradient(135deg, #1a2a6c 0%, #2d4a9e 45%, #a9812f 100%)",
+                  background: "linear-gradient(180deg, #1F4F91 0%, #0D223C 50%, #020810 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",

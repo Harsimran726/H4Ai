@@ -6,14 +6,8 @@
  */
 
 import 'dotenv/config';
-import { PrismaClient } from '../app/generated/prisma/client';
-import { PrismaPg } from '@prisma/adapter-pg';
-import { Pool } from 'pg';
-
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({ connectionString });
-const adapter = new PrismaPg(pool);
-const prisma = new PrismaClient({ adapter });
+import { addDays, setHours, setMinutes, setSeconds, setMilliseconds } from 'date-fns';
+import { prisma } from '../lib/db';
 
 async function main() {
   const DAYS_AHEAD = 30;
@@ -71,5 +65,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-    pool.end();
   });
