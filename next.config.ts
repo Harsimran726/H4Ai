@@ -32,14 +32,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
-  // Tell Next.js/Turbopack to NEVER bundle these packages.
-  // They will be loaded from node_modules at true runtime on Vercel,
-  // which means process.env is read from live Vercel memory, not baked-in at build time.
+  // Tell Next.js to NEVER bundle these packages - load them fresh from node_modules at runtime.
+  // Critical for database drivers: prevents Turbopack from inlining undefined env vars at build time.
   serverExternalPackages: [
     "@prisma/client",
-    "@prisma/adapter-neon",
-    "@neondatabase/serverless",
-    "ws",
+    "@prisma/adapter-pg",
+    "pg",
+    "pg-pool",
   ],
   async headers() {
     return [
