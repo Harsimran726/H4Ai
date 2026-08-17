@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
+import { SITE_URL } from "@/lib/site";
 
 export interface BreadcrumbItem {
   name: string;
@@ -12,7 +13,7 @@ interface BreadcrumbsProps {
 }
 
 export function Breadcrumbs({ items, className = "" }: BreadcrumbsProps) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.h4ai.in";
+  const baseUrl = SITE_URL;
   
   const breadcrumbListJsonLd = {
     "@context": "https://schema.org",

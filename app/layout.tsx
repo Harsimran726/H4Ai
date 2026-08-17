@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Sora, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -19,7 +20,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.h4ai.in'),
+  metadataBase: new URL(SITE_URL),
   title: {
     template: '%s | H4Ai',
     default: "H4Ai — AI Voice Agents, Agentic AI & Custom Websites | Mansa, Punjab",
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'H4Ai',
     locale: 'en_IN',
-    url: 'https://www.h4ai.in',
+    url: SITE_URL,
     images: [
       {
         url: '/og-image.webp',

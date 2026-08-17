@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
 import { getAllLocationIds } from '@/lib/content'
+import { SITE_URL } from '@/lib/site'
 
 export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.h4ai.in';
+  const baseUrl = SITE_URL;
 
   let blogRoutes: MetadataRoute.Sitemap = [];
   
