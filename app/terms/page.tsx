@@ -1,10 +1,19 @@
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | H4Ai",
-  description: "Terms of Service for H4Ai",
+  title: "Terms of Service",
+  description: "Terms of Service for H4Ai — AI Engineering, Website Development & Digital Services.",
+  alternates: {
+    canonical: '/terms',
+  },
+  openGraph: {
+    title: "Terms of Service | H4Ai",
+    description: "Terms of Service for H4Ai.",
+    url: 'https://www.h4ai.in/terms',
+  },
 };
 
 export default function TermsPage() {
@@ -13,38 +22,40 @@ export default function TermsPage() {
       <Nav />
       <main className="flex-1 bg-background pt-24 pb-32">
         <div className="container mx-auto px-4 max-w-3xl">
+          <Breadcrumbs items={[{ name: "Terms of Service", href: "/terms" }]} />
+          
           <h1 className="text-4xl font-sora font-semibold text-foreground mb-8">Terms of Service</h1>
-          <p className="text-muted-foreground mb-8">Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+          <p className="text-muted-foreground mb-8">Last updated: August 17, 2026</p>
           
           <div className="prose prose-lg text-muted-foreground prose-headings:font-sora prose-headings:text-foreground">
             <h2>1. Agreement to Terms</h2>
             <p>
-              By accessing or using our website and services, you agree to be bound by these Terms of Service. If you disagree with any part of the terms, you may not access our services.
+              By accessing our website or engaging H4Ai for AI engineering, web development, or marketing services, you agree to be bound by these Terms of Service.
             </p>
 
-            <h2>2. Services</h2>
+            <h2>2. Services &amp; Scope</h2>
             <p>
-              H4Ai provides software development, AI integration, and digital marketing services. The specific scope, deliverables, and timelines will be agreed upon in a separate Statement of Work (SOW) or contract.
+              H4Ai provides software development, AI voice agent integration, agentic automation, and digital marketing services. Specific project deliverables, milestone schedules, and payment terms will be formalized in an agreed Statement of Work (SOW).
             </p>
 
             <h2>3. Intellectual Property</h2>
             <p>
-              Unless otherwise stated in a specific contract, H4Ai retains all intellectual property rights to the underlying code, tools, and systems we develop. Upon full payment, clients are granted a license to use the delivered product for its intended business purpose.
+              Upon full payment for custom development services, the client owns 100% of the custom application source code, content, and branding created specifically for their business.
             </p>
 
             <h2>4. Limitation of Liability</h2>
             <p>
-              H4Ai shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of our services or any related products.
+              H4Ai shall not be liable for any indirect, incidental, or consequential damages arising from the use or inability to use delivered systems, beyond the fees paid for the specific service.
             </p>
 
             <h2>5. Governing Law</h2>
             <p>
-              These Terms shall be governed by and construed in accordance with the laws of India, specifically within the jurisdiction of Punjab.
+              These Terms shall be governed by and construed in accordance with the laws of India, within the jurisdiction of Punjab.
             </p>
 
-            <h2>6. Contact Us</h2>
+            <h2>6. Contact Information</h2>
             <p>
-              If you have any questions about these Terms, please contact us at contact@h4ai.in.
+              For legal inquiries or questions regarding these terms, please contact <a href="mailto:contact@h4ai.in" className="text-primary hover:underline">contact@h4ai.in</a>.
             </p>
           </div>
         </div>

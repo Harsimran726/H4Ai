@@ -1,6 +1,7 @@
 import { getLocationData, getAllLocationIds } from "@/lib/content";
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -14,12 +15,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locationData = await getLocationData(resolvedParams.city);
   if (!locationData) {
     return {
-      title: "Location Not Found | H4Ai",
+      title: "Location Not Found",
     };
   }
   return {
-    title: `${locationData.title} | H4Ai`,
+    title: locationData.title,
     description: locationData.description,
+    alternates: {
+      canonical: `/locations/${resolvedParams.city}`,
+    },
+    openGraph: {
+      title: `${locationData.title} | H4Ai`,
+      description: locationData.description,
+      url: `https://www.h4ai.in/locations/${resolvedParams.city}`,
+    },
   };
 }
 
@@ -44,34 +53,88 @@ export default async function LocationPage({ params }: Props) {
   const jsonLd = isAnchor 
     ? {
         "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "H4Ai",
-        "image": "https://h4ai.in/logo.png",
-        "@id": "https://h4ai.in/#localbusiness",
-        "url": "https://h4ai.in",
-        "telephone": "7814351011",
-        "email": "contact@h4ai.in",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "",
-          "addressLocality": "Mansa",
-          "addressRegion": "Punjab",
-          "postalCode": "151505",
-          "addressCountry": "IN"
-        },
-        "sameAs": ["https://instagram.com/official.h4ai"]
+        "@graph": [
+          {
+            "@type": "ProfessionalService",
+            "name": "H4Ai",
+            "image": "https://www.h4ai.in/logo.png",
+            "@id": "https://www.h4ai.in/#localbusiness",
+            "url": "https://www.h4ai.in",
+            "telephone": "+91 78143 51011",
+            "email": "contact@h4ai.in",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Mansa City",
+              "addressLocality": "Mansa",
+              "addressRegion": "Punjab",
+              "postalCode": "151505",
+              "addressCountry": "IN"
+            },
+            "sameAs": [
+              "https://instagram.com/official.h4ai",
+              "https://linkedin.com/in/harsimransinghaiengineer"
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How long does it take to build a business website in Mansa?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Standard business sites take 2-3 weeks. Premium custom builds typically take 4-8 weeks depending on complexity."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is an AI voice agent and how is it different from a chatbot?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "An AI voice agent handles real phone calls with natural conversational abilities (including pauses and breathing). It is completely different from a text-based chatbot, as it can book appointments and speak to customers on the phone in real time."
+                }
+              }
+            ]
+          }
+        ]
       }
     : {
         "@context": "https://schema.org",
-        "@type": "Service",
-        "name": locationData.service,
-        "provider": {
-          "@type": "Organization",
-          "name": "H4Ai",
-          "url": "https://h4ai.in"
-        },
-        "areaServed": [
-          { "@type": "City", "name": locationData.city }
+        "@graph": [
+          {
+            "@type": "Service",
+            "name": locationData.service,
+            "provider": {
+              "@type": "Organization",
+              "name": "H4Ai",
+              "url": "https://www.h4ai.in",
+              "@id": "https://www.h4ai.in/#localbusiness"
+            },
+            "areaServed": [
+              { "@type": "City", "name": locationData.city }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": `How long does it take to deploy AI and web services in ${locationData.city}?`,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Standard business sites and AI voice agents take 2-3 weeks. Full custom workflow integrations take 4-8 weeks."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is an AI voice agent and how does it help local businesses?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "An AI voice agent answers inbound phone calls 24/7, qualifies potential leads, answers FAQs, and books appointments straight into your calendar with zero delay."
+                }
+              }
+            ]
+          }
         ]
       };
 
@@ -81,6 +144,13 @@ export default async function LocationPage({ params }: Props) {
       <Nav />
       <main className="flex-1 bg-background pt-24 pb-32">
         <div className="container mx-auto px-4 max-w-4xl">
+          <Breadcrumbs
+            items={[
+              { name: "Locations", href: "/locations" },
+              { name: locationData.city, href: `/locations/${resolvedParams.city}` },
+            ]}
+          />
+          
           <h1 className="text-4xl md:text-5xl font-sora font-semibold text-foreground mb-8">
             {locationData.title}
           </h1>

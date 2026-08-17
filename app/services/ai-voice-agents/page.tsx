@@ -1,14 +1,23 @@
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Metadata } from "next";
 import { Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "AI Voice Agents for Local Business — Never Miss a Call | H4Ai",
-  description: "H4Ai builds AI voice agents that answer calls, qualify leads, and book appointments 24/7 for local businesses — dental, home services, salons, and more. See how it works.",
+  title: "AI Voice Agents for Local Business — 24/7 Phone Receptionist",
+  description: "H4Ai builds AI voice calling agents that answer calls, qualify leads, and book appointments 24/7 for local businesses — dental, home services, salons, and more. See how it works.",
+  alternates: {
+    canonical: '/services/ai-voice-agents',
+  },
+  openGraph: {
+    title: "AI Voice Agents for Local Business — 24/7 Phone Receptionist | H4Ai",
+    description: "H4Ai builds AI voice calling agents that answer calls, qualify leads, and book appointments 24/7 for local businesses. See how it works.",
+    url: 'https://www.h4ai.in/services/ai-voice-agents',
+  },
 };
 
 export default function AIVoiceAgentsPage() {
@@ -17,38 +26,48 @@ export default function AIVoiceAgentsPage() {
     "@graph": [
       {
         "@type": "Service",
-        "name": "AI Voice Agents",
+        "@id": "https://www.h4ai.in/services/ai-voice-agents#service",
+        "name": "AI Voice Agents for Local Businesses",
+        "serviceType": "AI Voice Calling Agent & Virtual Receptionist",
+        "description": "Autonomous AI phone agents that answer inbound calls, qualify leads, answer FAQs, and book calendar appointments 24/7 with natural conversational latency.",
         "provider": {
           "@type": "Organization",
           "name": "H4Ai",
-          "url": "https://h4ai.in"
-        }
+          "url": "https://www.h4ai.in",
+          "@id": "https://www.h4ai.in/#localbusiness"
+        },
+        "areaServed": [
+          { "@type": "Country", "name": "India" },
+          { "@type": "Country", "name": "Canada" },
+          { "@type": "Country", "name": "United States" }
+        ]
       },
       {
         "@type": "FAQPage",
+        "@id": "https://www.h4ai.in/services/ai-voice-agents#faq",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Will it sound robotic to customers?",
+            "name": "Will the AI voice agent sound robotic to customers?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. We use state-of-the-art conversational AI models that include natural pauses, breathing sounds, and varied intonation. Most callers do not realize they are speaking with an AI."
+              "text": "No. We use state-of-the-art conversational voice AI models with sub-2-second response latency that include natural pauses, breathing sounds, and varied intonation. Most callers do not realize they are speaking with an AI assistant."
             }
           },
           {
             "@type": "Question",
-            "name": "Can it handle multiple languages like Punjabi and English?",
+            "name": "Can the AI voice agent handle multiple languages like Punjabi, Hindi, and English?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. The agent can seamlessly switch between languages mid-conversation based on what the caller speaks."
+              "text": "Yes. The voice agent can seamlessly understand and switch between languages (English, Hindi, Punjabi, Hinglish) mid-conversation based on what the caller speaks."
             }
           },
           {
             "@type": "Question",
-            "name": "How much does it cost per month?",
+            "name": "How much does an AI voice agent cost per month?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Pricing is based on call volume, typically starting at a fraction of the cost of a part-time hire. Book a call for a custom quote based on your average monthly minutes."
+              "text": "Pricing is based on call volume, typically starting at a fraction of the cost of a part-time receptionist hire. Book a free discovery call for a custom quote tailored to your monthly minutes."
             }
           }
         ]
@@ -62,6 +81,13 @@ export default function AIVoiceAgentsPage() {
       <Nav />
       <main className="flex-1 bg-background pt-24 pb-32">
         <div className="container mx-auto px-4 max-w-4xl">
+          <Breadcrumbs
+            items={[
+              { name: "Services", href: "/services" },
+              { name: "AI Voice Agents", href: "/services/ai-voice-agents" },
+            ]}
+          />
+          
           <h1 className="text-4xl md:text-5xl font-sora font-semibold text-foreground mb-8">
             An AI Receptionist That Answers Every Call, Every Time
           </h1>
@@ -81,7 +107,7 @@ export default function AIVoiceAgentsPage() {
               </Card>
               <Card className="bg-card border-none shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">2. Qualifies & Answers</h3>
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">2. Qualifies &amp; Answers</h3>
                   <p className="text-muted-foreground text-sm">Understands complex questions, checks FAQs, and speaks naturally in multiple languages.</p>
                 </CardContent>
               </Card>
@@ -99,16 +125,16 @@ export default function AIVoiceAgentsPage() {
               </Card>
             </div>
 
-            <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">Who It's For</h2>
+            <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">Who It&apos;s For</h2>
             <div className="flex flex-wrap gap-3 mb-16">
-              {['Dental Clinics', 'Med Spas', 'Law Firms', 'Real Estate', 'Home Services (HVAC/Plumbing)', 'Salons & Barbershops', 'Auto Repair', 'Restaurants', 'Veterinary Clinics', 'Property Management'].map(industry => (
+              {['Dental Clinics', 'Med Spas', 'Law Firms', 'Real Estate Agencies', 'Home Services (HVAC/Plumbing)', 'Salons & Barbershops', 'Auto Repair', 'Restaurants', 'Veterinary Clinics', 'Property Management'].map(industry => (
                 <span key={industry} className="px-4 py-2 bg-card text-foreground rounded-full text-sm font-medium border border-border">
                   {industry}
                 </span>
               ))}
             </div>
 
-            <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">AI Voice Agent vs. Hiring</h2>
+            <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">AI Voice Agent vs. Human Hiring</h2>
             <div className="overflow-x-auto mb-16">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -137,7 +163,7 @@ export default function AIVoiceAgentsPage() {
                   <tr>
                     <td className="py-4 text-muted-foreground">Training Time</td>
                     <td className="py-4 text-foreground">Weeks</td>
-                    <td className="py-4 text-secondary font-semibold flex items-center gap-2"><Check className="w-4 h-4"/> Instant</td>
+                    <td className="py-4 text-secondary font-semibold flex items-center gap-2"><Check className="w-4 h-4"/> Instant deployment</td>
                   </tr>
                 </tbody>
               </table>
@@ -151,20 +177,20 @@ export default function AIVoiceAgentsPage() {
             <div className="space-y-4">
               <Card className="bg-card border-none shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Will it sound robotic to customers?</h3>
-                  <p className="text-muted-foreground">No. We use state-of-the-art conversational AI models that include natural pauses, breathing sounds, and varied intonation. Most callers do not realize they are speaking with an AI.</p>
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Will the AI voice agent sound robotic to customers?</h3>
+                  <p className="text-muted-foreground">No. We use state-of-the-art conversational voice AI models with sub-2-second response latency that include natural pauses, breathing sounds, and varied intonation. Most callers do not realize they are speaking with an AI assistant.</p>
                 </CardContent>
               </Card>
               <Card className="bg-card border-none shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Can it handle multiple languages like Punjabi and English?</h3>
-                  <p className="text-muted-foreground">Yes. The agent can seamlessly switch between languages mid-conversation based on what the caller speaks.</p>
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Can the AI voice agent handle multiple languages like Punjabi, Hindi, and English?</h3>
+                  <p className="text-muted-foreground">Yes. The voice agent can seamlessly understand and switch between languages (English, Hindi, Punjabi, Hinglish) mid-conversation based on what the caller speaks.</p>
                 </CardContent>
               </Card>
               <Card className="bg-card border-none shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">How much does it cost per month?</h3>
-                  <p className="text-muted-foreground">Pricing is based on call volume, typically starting at a fraction of the cost of a part-time hire. Book a call for a custom quote based on your average monthly minutes.</p>
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">How much does an AI voice agent cost per month?</h3>
+                  <p className="text-muted-foreground">Pricing is based on call volume, typically starting at a fraction of the cost of a part-time receptionist hire. Book a free discovery call for a custom quote tailored to your monthly minutes.</p>
                 </CardContent>
               </Card>
             </div>

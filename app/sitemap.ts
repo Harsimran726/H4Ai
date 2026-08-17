@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next'
 import { prisma } from '@/lib/db'
+import { getAllLocationIds } from '@/lib/content'
 
 export const dynamic = 'force-dynamic';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://h4ai.in';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.h4ai.in';
 
   let blogRoutes: MetadataRoute.Sitemap = [];
   
@@ -18,32 +19,108 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       blogRoutes = posts.map((post) => ({
         url: `${baseUrl}/blog/${post.slug}`,
-        lastModified: post.updated_at,
+        lastModified: post.updated_at || new Date(),
         changeFrequency: 'weekly' as const,
-        priority: 0.7,
+        priority: 0.8,
       }));
     }
   } catch (error) {
-    console.warn("Skipping dynamic blog routes for sitemap during build phase.");
+    console.warn("Skipping dynamic blog routes for sitemap during build phase.", error);
   }
 
-  const routes = [
-    '',
-    '/services',
-    '/services/social-media-management',
-    '/services/website-development',
-    '/services/ai-integration-development',
-    '/services/ai-voice-agents',
-    '/services/agentic-ai-systems',
-    '/about',
-    '/contact',
-    '/blog',
-  ].map((route) => ({
-    url: `${baseUrl}${route}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1 : 0.8,
-  }));
+  let locationRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const locationIds = await getAllLocationIds();
+    locationRoutes = locationIds.map((id) => ({
+      url: `${baseUrl}/locations/${id}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.warn("Skipping location routes for sitemap:", error);
+  }
 
-  return [...routes, ...blogRoutes];
+  const staticRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 1.0,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/ai-voice-agents`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/agentic-ai-systems`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/ai-integration-development`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/website-development`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/social-media-management`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/locations`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'daily' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/privacy-policy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
+    {
+      url: `${baseUrl}/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly' as const,
+      priority: 0.3,
+    },
+  ];
+
+  return [...staticRoutes, ...locationRoutes, ...blogRoutes];
 }

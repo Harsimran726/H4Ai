@@ -1,13 +1,22 @@
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "AI Integration & Development Services for Business | H4Ai",
-  description: "H4Ai integrates AI into how your business already runs — automating repetitive work, connecting your tools, and building custom AI systems. Book a free consultation.",
+  title: "AI Integration & Custom LLM Workflow Development",
+  description: "H4Ai integrates AI directly into how your business already runs — automating repetitive work, connecting your tools (WhatsApp, CRM, Sheets), and building custom AI systems.",
+  alternates: {
+    canonical: '/services/ai-integration-development',
+  },
+  openGraph: {
+    title: "AI Integration & Custom LLM Workflow Development | H4Ai",
+    description: "H4Ai integrates AI directly into how your business already runs — automating repetitive work and connecting your tools.",
+    url: 'https://www.h4ai.in/services/ai-integration-development',
+  },
 };
 
 export default function AIIntegrationPage() {
@@ -16,15 +25,25 @@ export default function AIIntegrationPage() {
     "@graph": [
       {
         "@type": "Service",
-        "name": "AI Integration & Development",
+        "@id": "https://www.h4ai.in/services/ai-integration-development#service",
+        "name": "AI Integration & Custom Development",
+        "serviceType": "Enterprise AI Integration & RAG Pipeline Engineering",
+        "description": "Custom integration of LLMs, WhatsApp bots, CRM automations, and private RAG knowledge bases directly into existing business workflows.",
         "provider": {
           "@type": "Organization",
           "name": "H4Ai",
-          "url": "https://h4ai.in"
-        }
+          "url": "https://www.h4ai.in",
+          "@id": "https://www.h4ai.in/#localbusiness"
+        },
+        "areaServed": [
+          { "@type": "Country", "name": "India" },
+          { "@type": "Country", "name": "Canada" },
+          { "@type": "Country", "name": "United States" }
+        ]
       },
       {
         "@type": "FAQPage",
+        "@id": "https://www.h4ai.in/services/ai-integration-development#faq",
         "mainEntity": [
           {
             "@type": "Question",
@@ -32,6 +51,14 @@ export default function AIIntegrationPage() {
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Yes, we integrate custom AI solutions directly into the platforms you already use every day. We ensure the AI bridges the gap between your existing tools without forcing you to change your workflow."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a custom RAG pipeline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Retrieval-Augmented Generation (RAG) allows an AI model to privately search and cite your company's internal documents, manuals, and pricing databases to provide accurate, hallucination-free answers to employees and customers."
             }
           }
         ]
@@ -45,13 +72,20 @@ export default function AIIntegrationPage() {
       <Nav />
       <main className="flex-1 bg-background pt-24 pb-32">
         <div className="container mx-auto px-4 max-w-4xl">
+          <Breadcrumbs
+            items={[
+              { name: "Services", href: "/services" },
+              { name: "AI Integration", href: "/services/ai-integration-development" },
+            ]}
+          />
+          
           <h1 className="text-4xl md:text-5xl font-sora font-semibold text-foreground mb-8">
             Put AI to Work in Your Business — Without the Complexity
           </h1>
           
-          <div className="prose prose-lg text-muted-foreground prose-headings:font-sora prose-headings:text-foreground">
+          <div className="prose prose-lg text-muted-foreground prose-headings:font-sora prose-headings:text-foreground max-w-none">
             <p className="text-xl text-foreground font-medium mb-12">
-              H4Ai integrates AI directly into a business's existing workflow — automating repetitive tasks, connecting tools like WhatsApp and Google Sheets, and building custom AI systems (including RAG pipelines and multi-agent automation) tailored to how the business actually operates, not a generic off-the-shelf tool.
+              H4Ai integrates AI directly into a business&apos;s existing workflow — automating repetitive tasks, connecting tools like WhatsApp and Google Sheets, and building custom AI systems (including RAG pipelines and multi-agent automation) tailored to how the business actually operates, not a generic off-the-shelf tool.
             </p>
 
             <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">What We Build</h2>
@@ -72,7 +106,7 @@ export default function AIIntegrationPage() {
                 <p>We develop the custom integration or pipeline securely in the background.</p>
               </div>
               <div>
-                <h3 className="font-sora font-medium text-foreground">3. Launch & Support</h3>
+                <h3 className="font-sora font-medium text-foreground">3. Launch &amp; Support</h3>
                 <p>We deploy the system and manage it, so you never have to touch code.</p>
               </div>
             </div>
@@ -89,6 +123,12 @@ export default function AIIntegrationPage() {
                 <CardContent className="p-6">
                   <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Can AI integration work with the tools I already use (WhatsApp, Google Sheets, CRM)?</h3>
                   <p className="text-muted-foreground">Yes, we integrate custom AI solutions directly into the platforms you already use every day. We ensure the AI bridges the gap between your existing tools without forcing you to change your workflow.</p>
+                </CardContent>
+              </Card>
+              <Card className="bg-card border-none shadow-sm">
+                <CardContent className="p-6">
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">What is a custom RAG pipeline?</h3>
+                  <p className="text-muted-foreground">Retrieval-Augmented Generation (RAG) allows an AI model to privately search and cite your company&apos;s internal documents, manuals, and pricing databases to provide accurate, hallucination-free answers to employees and customers.</p>
                 </CardContent>
               </Card>
             </div>

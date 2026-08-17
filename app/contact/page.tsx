@@ -1,12 +1,21 @@
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { Metadata } from "next";
 import { ContactForm } from "@/components/marketing/contact-form";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Contact H4Ai — Book a Free Call | AI, Web & Social Media",
-  description: "Get in touch with H4Ai. Based in Mansa, Punjab — serving businesses across India, Canada, and the US. Book a free strategy call today.",
+  title: "Contact Us — Book a Free Discovery Strategy Call",
+  description: "Get in touch with H4Ai. Based in Mansa, Punjab — serving businesses across India, Canada, and the US. Book a free AI & web strategy call today.",
+  alternates: {
+    canonical: '/contact',
+  },
+  openGraph: {
+    title: "Contact Us — Book a Free Discovery Strategy Call | H4Ai",
+    description: "Get in touch with H4Ai. Based in Mansa, Punjab — serving businesses across India, Canada, and the US.",
+    url: 'https://www.h4ai.in/contact',
+  },
 };
 
 const contactDetails = [
@@ -48,24 +57,37 @@ export default function ContactPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "ContactPage", "url": "https://h4ai.in/contact", "name": "Contact H4Ai" },
+      { 
+        "@type": "ContactPage", 
+        "@id": "https://www.h4ai.in/contact#webpage",
+        "url": "https://www.h4ai.in/contact", 
+        "name": "Contact H4Ai",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://www.h4ai.in/#website"
+        }
+      },
       {
-        "@type": "LocalBusiness",
+        "@type": "ProfessionalService",
         "name": "H4Ai",
-        "image": "https://h4ai.in/logo.png",
-        "@id": "https://h4ai.in/#localbusiness",
-        "url": "https://h4ai.in",
-        "telephone": "7814351011",
+        "image": "https://www.h4ai.in/logo.png",
+        "@id": "https://www.h4ai.in/#localbusiness",
+        "url": "https://www.h4ai.in",
+        "telephone": "+91 78143 51011",
         "email": "contact@h4ai.in",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "",
+          "streetAddress": "Mansa City",
           "addressLocality": "Mansa",
           "addressRegion": "Punjab",
           "postalCode": "151505",
           "addressCountry": "IN",
         },
-        "sameAs": ["https://instagram.com/official.h4ai"],
+        "sameAs": [
+          "https://instagram.com/official.h4ai",
+          "https://linkedin.com/in/harsimransinghaiengineer",
+          "https://github.com/harsimran726"
+        ],
       },
     ],
   };
@@ -80,15 +102,17 @@ export default function ContactPage() {
         <section className="relative border-b border-border bg-card/40 pt-28 pb-20 px-4 overflow-hidden">
           <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-5" style={{ background: "radial-gradient(circle, #4B3FA8, transparent)" }} aria-hidden />
           <div className="container mx-auto max-w-5xl">
+            <Breadcrumbs items={[{ name: "Contact", href: "/contact" }]} />
+            
             <div className="flex items-center gap-2 mb-6">
               <span className="inline-block w-8 h-px bg-primary" />
               <span className="text-xs uppercase tracking-widest text-primary font-sora font-semibold">Contact</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-sora font-semibold text-foreground leading-tight mb-6 max-w-2xl">
-              Let's Talk About Your Business
+              Let&apos;s Talk About Your Business
             </h1>
             <p className="text-lg text-muted-foreground max-w-xl leading-relaxed">
-              Have a question? Prefer a direct conversation? Send us a message and we'll get back to you within 24 hours. Or just book a call directly.
+              Have a question? Prefer a direct conversation? Send us a message and we&apos;ll get back to you within 24 hours. Or book a strategy call directly.
             </p>
           </div>
         </section>
@@ -134,7 +158,7 @@ export default function ContactPage() {
                 <div className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card">
                   <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
                   <p className="text-sm text-muted-foreground">
-                    <strong className="text-foreground">Typically responds within 4–6 hours</strong> on business days.
+                    <strong className="text-foreground">Typically responds within 2–4 hours</strong> on business days.
                   </p>
                 </div>
 

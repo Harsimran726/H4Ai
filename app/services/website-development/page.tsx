@@ -1,13 +1,22 @@
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Website Development Company | Custom Business Websites | H4Ai",
+  title: "Custom Website Development & High-Converting Web Design",
   description: "H4Ai designs and builds fast, modern, mobile-first websites for local and premium businesses — from small business sites to fully custom builds. Get a free quote.",
+  alternates: {
+    canonical: '/services/website-development',
+  },
+  openGraph: {
+    title: "Custom Website Development & High-Converting Web Design | H4Ai",
+    description: "H4Ai designs and builds fast, modern, mobile-first websites for local and premium businesses.",
+    url: 'https://www.h4ai.in/services/website-development',
+  },
 };
 
 export default function WebsiteDevelopmentPage() {
@@ -16,37 +25,44 @@ export default function WebsiteDevelopmentPage() {
     "@graph": [
       {
         "@type": "Service",
-        "name": "Website Development",
+        "@id": "https://www.h4ai.in/services/website-development#service",
+        "name": "Website Development & High-Converting Web Design",
+        "serviceType": "Custom Web Development & Performance Optimization",
+        "description": "High-speed, SEO-optimized, mobile-responsive business websites built using modern Next.js architectures designed to maximize customer conversion.",
         "provider": {
           "@type": "Organization",
           "name": "H4Ai",
-          "url": "https://h4ai.in"
+          "url": "https://www.h4ai.in",
+          "@id": "https://www.h4ai.in/#localbusiness"
         },
         "areaServed": [
           { "@type": "City", "name": "Mansa" },
           { "@type": "City", "name": "Chandigarh" },
           { "@type": "City", "name": "Ludhiana" },
           { "@type": "City", "name": "Bathinda" },
-          { "@type": "City", "name": "New Delhi" }
+          { "@type": "Country", "name": "India" },
+          { "@type": "Country", "name": "Canada" },
+          { "@type": "Country", "name": "United States" }
         ]
       },
       {
         "@type": "FAQPage",
+        "@id": "https://www.h4ai.in/services/website-development#faq",
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "How long does it take to build?",
+            "name": "How long does it take to build a custom business website?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Standard business sites take 2-3 weeks. Premium custom builds typically take 4-8 weeks depending on complexity."
+              "text": "Standard business websites take 2-3 weeks from kick-off to launch. Premium custom builds with bespoke web applications typically take 4-8 weeks depending on scope."
             }
           },
           {
             "@type": "Question",
-            "name": "Do I own my website?",
+            "name": "Do I own 100% of my website after launch?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Absolutely. Once the final payment is made, you own 100% of the codebase, content, and design."
+              "text": "Absolutely. Once the project is completed, you own 100% of the source code, content, domain, and design assets with zero vendor lock-in."
             }
           }
         ]
@@ -60,16 +76,23 @@ export default function WebsiteDevelopmentPage() {
       <Nav />
       <main className="flex-1 bg-background pt-24 pb-32">
         <div className="container mx-auto px-4 max-w-4xl">
+          <Breadcrumbs
+            items={[
+              { name: "Services", href: "/services" },
+              { name: "Website Development", href: "/services/website-development" },
+            ]}
+          />
+          
           <h1 className="text-4xl md:text-5xl font-sora font-semibold text-foreground mb-8">
             Websites That Load Fast, Look Premium, and Actually Convert
           </h1>
           
-          <div className="prose prose-lg text-muted-foreground prose-headings:font-sora prose-headings:text-foreground">
+          <div className="prose prose-lg text-muted-foreground prose-headings:font-sora prose-headings:text-foreground max-w-none">
             <p className="text-xl text-foreground font-medium mb-12">
               H4Ai builds custom business websites — from simple, fast small-business sites to fully bespoke premium builds with custom functionality. Every site is mobile-first, built for speed, and designed to turn visitors into inquiries, not just look good.
             </p>
 
-            <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">What's Included</h2>
+            <h2 className="text-2xl font-sora font-semibold text-foreground mt-12 mb-6">What&apos;s Included</h2>
             <ul className="mb-12 space-y-2">
               <li><strong>Mobile-First Design:</strong> Optimized for where your customers actually search.</li>
               <li><strong>Speed Optimization:</strong> Lightning-fast load times to retain visitors.</li>
@@ -108,14 +131,14 @@ export default function WebsiteDevelopmentPage() {
             <div className="space-y-6">
               <Card className="bg-card border-none shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">How long does it take to build?</h3>
-                  <p className="text-muted-foreground">Standard business sites take 2-3 weeks. Premium custom builds typically take 4-8 weeks depending on complexity.</p>
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">How long does it take to build a custom business website?</h3>
+                  <p className="text-muted-foreground">Standard business websites take 2-3 weeks from kick-off to launch. Premium custom builds with bespoke web applications typically take 4-8 weeks depending on scope.</p>
                 </CardContent>
               </Card>
               <Card className="bg-card border-none shadow-sm">
                 <CardContent className="p-6">
-                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Do I own my website?</h3>
-                  <p className="text-muted-foreground">Absolutely. Once the final payment is made, you own 100% of the codebase, content, and design.</p>
+                  <h3 className="font-sora font-semibold text-lg text-foreground mb-2">Do I own 100% of my website after launch?</h3>
+                  <p className="text-muted-foreground">Absolutely. Once the project is completed, you own 100% of the source code, content, domain, and design assets with zero vendor lock-in.</p>
                 </CardContent>
               </Card>
             </div>

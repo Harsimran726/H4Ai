@@ -1,18 +1,27 @@
 import { Nav } from "@/components/marketing/nav";
 import { Footer } from "@/components/marketing/footer";
+import { Breadcrumbs } from "@/components/marketing/breadcrumbs";
 import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About H4Ai — AI Engineer-Led Development Studio | Mansa, Punjab",
-  description: "H4Ai is founded by Harsimran, an AI engineer building production AI systems for businesses across India and North America. Learn our story.",
+  title: "About Us — AI Engineer-Led Automation & Development Studio",
+  description: "H4Ai is founded by Harsimran Singh, an AI engineer building production multi-agent systems, voice calling agents, and custom web platforms for businesses in India and North America.",
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    title: "About Us — AI Engineer-Led Automation & Development Studio | H4Ai",
+    description: "H4Ai is founded by Harsimran Singh, an AI engineer building production multi-agent systems, voice calling agents, and custom web platforms for businesses in India and North America.",
+    url: 'https://www.h4ai.in/about',
+  },
 };
 
 const stats = [
-  { value: "1+", label: "Years of AI Engineering" },
-  { value: "5+", label: "Services Delivered" },
+  { value: "Production", label: "Agentic AI & Voice Systems" },
+  { value: "5+", label: "Core Services Delivered" },
   { value: "2", label: "Continents Served" },
-  { value: "100%", label: "Custom, No Templates" },
+  { value: "100%", label: "Custom, No White-Label Reselling" },
 ];
 
 const values = [
@@ -21,7 +30,7 @@ const values = [
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className="w-6 h-6"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
     ),
     title: "Engineering-Grade AI",
-    desc: "We build actual production systems — multi-agent pipelines, RAG systems, voice AI — not off-the-shelf chatbots rebranded as custom solutions.",
+    desc: "We build actual production systems — multi-agent pipelines, RAG architectures, voice calling AI with sub-2s latency — not off-the-shelf chatbots rebranded as custom solutions.",
   },
   {
     icon: (
@@ -43,12 +52,38 @@ export default function AboutPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "AboutPage", "url": "https://h4ai.in/about", "name": "About H4Ai" },
+      { 
+        "@type": "AboutPage",
+        "@id": "https://www.h4ai.in/about#webpage",
+        "url": "https://www.h4ai.in/about",
+        "name": "About H4Ai — AI Engineer-Led Development Studio",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://www.h4ai.in/#website"
+        }
+      },
       {
         "@type": "Person",
-        "name": "Harsimran",
+        "@id": "https://www.h4ai.in/about#harsimran",
+        "name": "Harsimran Singh",
         "jobTitle": "Founder & AI Engineer",
-        "worksFor": { "@type": "Organization", "name": "H4Ai" },
+        "worksFor": { 
+          "@type": "Organization", 
+          "name": "H4Ai",
+          "@id": "https://www.h4ai.in/#localbusiness"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/harsimransinghaiengineer/",
+          "https://github.com/harsimran726"
+        ],
+        "knowsAbout": [
+          "Agentic AI",
+          "AI Voice Calling Agents",
+          "Large Language Models",
+          "Machine Learning",
+          "Full-Stack Web Development",
+          "Next.js Systems"
+        ]
       },
     ],
   };
@@ -61,11 +96,12 @@ export default function AboutPage() {
 
         {/* ── Hero ── */}
         <section className="relative border-b border-border bg-card/40 pt-28 pb-20 px-4 overflow-hidden">
-          {/* Subtle decorative background circles */}
           <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-5" style={{ background: "radial-gradient(circle, #4B3FA8, transparent)" }} aria-hidden />
           <div className="absolute -bottom-12 -left-12 w-64 h-64 rounded-full opacity-5" style={{ background: "radial-gradient(circle, #a9812f, transparent)" }} aria-hidden />
 
           <div className="container mx-auto max-w-5xl relative">
+            <Breadcrumbs items={[{ name: "About", href: "/about" }]} />
+            
             <div className="flex items-center gap-2 mb-6">
               <span className="inline-block w-8 h-px bg-primary" />
               <span className="text-xs uppercase tracking-widest text-primary font-sora font-semibold">About H4Ai</span>
@@ -76,7 +112,7 @@ export default function AboutPage() {
                   Built by an AI Engineer, Not a Reseller
                 </h1>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  H4Ai was founded by Harsimran, an AI engineer based in Mansa, Punjab, with hands-on experience building production multi-agent systems, RAG pipelines, and AI backends. We bring that same engineering-grade AI capability to local and growing businesses — not templated tools, actual custom systems.
+                  H4Ai was founded by Harsimran Singh, an AI engineer based in Mansa, Punjab, with deep hands-on expertise building production multi-agent systems, RAG pipelines, sub-2s latency voice AI, and high-converting web applications. We bring direct engineering-grade AI capability to businesses — no templated fluff, actual custom architectures.
                 </p>
                 <Link
                   href="/contact"
@@ -88,13 +124,12 @@ export default function AboutPage() {
               </div>
               {/* Founder card */}
               <div className="flex justify-center md:justify-end">
-                <div className="relative w-64 h-80 rounded-2xl border border-border bg-card flex flex-col items-center justify-end p-6 overflow-hidden">
+                <div className="relative w-72 h-88 rounded-2xl border border-border bg-card flex flex-col items-center justify-end p-6 overflow-hidden shadow-sm">
                   <div
                     className="absolute inset-0 flex items-start justify-center pt-8"
                     style={{ background: "linear-gradient(160deg, #1a2a6c10 0%, #a9812f15 100%)" }}
                   >
-                    {/* Abstract initials art */}
-                    <div className="w-28 h-28 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background">
+                    <div className="w-28 h-28 rounded-full border-2 border-primary/20 flex items-center justify-center bg-background shadow-inner">
                       <span
                         className="font-sora font-bold text-4xl"
                         style={{
@@ -109,9 +144,18 @@ export default function AboutPage() {
                     </div>
                   </div>
                   <div className="relative text-center">
-                    <p className="font-sora font-semibold text-foreground text-lg">Harsimran</p>
-                    <p className="text-xs text-muted-foreground uppercase tracking-widest mt-1">Founder & AI Engineer</p>
+                    <p className="font-sora font-semibold text-foreground text-lg">Harsimran Singh</p>
+                    <p className="text-xs text-primary font-medium uppercase tracking-widest mt-1">Founder &amp; AI Engineer</p>
                     <p className="text-xs text-muted-foreground mt-1">Mansa, Punjab, India</p>
+                    <div className="flex items-center justify-center gap-3 mt-3">
+                      <a href="https://linkedin.com/in/harsimransinghaiengineer" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors text-xs underline underline-offset-2">
+                        LinkedIn
+                      </a>
+                      <span className="text-border">•</span>
+                      <a href="https://github.com/harsimran726" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors text-xs underline underline-offset-2">
+                        GitHub
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -126,7 +170,7 @@ export default function AboutPage() {
               {stats.map((s) => (
                 <div key={s.label} className="text-center">
                   <p
-                    className="font-sora font-bold text-4xl mb-1"
+                    className="font-sora font-bold text-3xl sm:text-4xl mb-1"
                     style={{
                       background: "linear-gradient(135deg, #1a2a6c 0%, #2d4a9e 45%, #a9812f 100%)",
                       WebkitBackgroundClip: "text",
@@ -149,16 +193,21 @@ export default function AboutPage() {
             <div>
               <h2 className="font-sora font-semibold text-3xl text-foreground mb-6">Our Story</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                We saw too many businesses struggling to keep up with digital trends while simultaneously trying to deliver their core services. From clinics missing calls after hours, to businesses paying thousands for generic websites that didn't drive revenue.
+                We saw too many businesses struggling to keep up with digital trends while simultaneously trying to deliver their core services. From dental clinics missing calls after hours, to home service businesses paying thousands for generic websites that didn&apos;t generate revenue.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                H4Ai was created to be the operator behind the scenes. We don't just hand you software and wish you luck; we build, deploy, and manage the systems that allow you to focus entirely on your business.
+                H4Ai was created to be the operator behind the scenes. We don&apos;t just hand you software and wish you luck; we build, deploy, and manage the systems that allow you to focus entirely on running your business.
               </p>
             </div>
             <div>
               <h2 className="font-sora font-semibold text-3xl text-foreground mb-6">How We Work</h2>
               <ol className="space-y-5">
-                {["Discovery Call — We listen first, then identify exactly where AI or digital can save time or generate revenue.", "Roadmap — We design a clear, scoped plan. No surprises.", "Build & Deploy — We execute end-to-end, from code to launch.", "Ongoing Support — We stay on as the operator, not a one-off vendor."].map((step, i) => (
+                {[
+                  "Discovery Call — We listen first, then identify exactly where AI automation or digital systems can save hours or generate revenue.",
+                  "Architecture & Roadmap — We design a clear, scoped plan with transparent pricing. No surprises.",
+                  "Build & Deploy — We execute end-to-end, from AI model fine-tuning and backend pipelines to frontend launch.",
+                  "Ongoing Support — We stay on as your dedicated technical operator, not a one-off vendor."
+                ].map((step, i) => (
                   <li key={i} className="flex gap-4">
                     <span
                       className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
@@ -198,15 +247,15 @@ export default function AboutPage() {
         {/* ── Where We Serve ── */}
         <section className="py-20 px-4">
           <div className="container mx-auto max-w-5xl">
-            <h2 className="font-sora font-semibold text-3xl text-foreground mb-4">Where We're Based &amp; Who We Serve</h2>
+            <h2 className="font-sora font-semibold text-3xl text-foreground mb-4">Where We&apos;re Based &amp; Who We Serve</h2>
             <p className="text-muted-foreground leading-relaxed mb-8 max-w-2xl">
               H4Ai is based in <strong className="text-foreground">Mansa, Punjab, India</strong>. We serve local businesses across Punjab (Bathinda, Chandigarh, Ludhiana) and premium clients across North America (Saskatoon, Toronto, Boston).
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {["Mansa", "Bathinda", "Chandigarh", "Ludhiana", "Amritsar", "Delhi NCR", "Saskatoon", "Toronto"].map((city) => (
-                <div key={city} className="px-4 py-3 rounded-lg border border-border bg-card text-sm text-center text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors">
+                <Link key={city} href="/locations" className="px-4 py-3 rounded-lg border border-border bg-card text-sm text-center text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors">
                   {city}
-                </div>
+                </Link>
               ))}
             </div>
           </div>
