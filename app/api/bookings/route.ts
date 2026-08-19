@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { bookingSchema } from "@/lib/validation/bookings";
+import { sendEmail } from "@/lib/email/client";
+import { getBookingConfirmationHtml } from "@/lib/email/templates/booking-confirmation";
+import { getBookingAdminNotificationHtml } from "@/lib/email/templates/booking-admin-notification";
 import crypto from "crypto";
 
 // In-memory rate limiting: max 5 bookings per IP per hour
@@ -77,6 +80,99 @@ export async function POST(req: Request) {
 
       return { booking, slot, service, cancelToken };
     });
+
+    // Format date & time nicely for confirmation email
+    const tz = data.visitor_timezone || "Asia/Kolkata";
+    let formattedDate = "";
+    let formattedTime = "";
+
+    try {
+      const startDate = new Date(result.slot.start_time);
+      const endDate = new Date(result.slot.end_time);
+
+      formattedDate = startDate.toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        timeZone: tz,
+      });
+
+      const startTimeStr = startDate.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: tz,
+      });
+
+      const endTimeStr = endDate.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: tz,
+      });
+
+      formattedTime = `${startTimeStr} – ${endTimeStr}`;
+    } catch {
+      formattedDate = new Date(result.slot.start_time).toDateString();
+      formattedTime = new Date(result.slot.start_time).toTimeString();
+    }
+
+    // Send confirmation email to visitor
+    const visitorSent = await sendEmail({
+      to: data.visitor_email,
+      subject: `Booking Confirmed: ${result.service.name} with H4Ai`,
+      html: getBookingConfirmationHtml({
+        name: data.visitor_name,
+        serviceName: result.service.name,
+        date: formattedDate,
+        time: formattedTime,
+        timezone: tz,
+        cancelToken: result.cancelToken,
+      }),
+    });
+
+    // Send notification email to admin
+    const adminEmail = process.env.ADMIN_EMAIL || "contact@h4ai.in";
+    const adminSent = await sendEmail({
+      to: adminEmail,
+      subject: `New Booking: ${data.visitor_name} (${result.service.name})`,
+      html: getBookingAdminNotificationHtml({
+        visitorName: data.visitor_name,
+        visitorEmail: data.visitor_email,
+        visitorPhone: data.visitor_phone,
+        visitorCompany: data.visitor_company_name,
+        visitorWebsite: data.visitor_website,
+        visitorBusiness: data.visitor_business,
+        notes: data.notes,
+        serviceName: result.service.name,
+        date: formattedDate,
+        time: formattedTime,
+        timezone: tz,
+      }),
+    });
+
+    // Log the emails
+    try {
+      await prisma.emailLog.createMany({
+        data: [
+          {
+            booking_id: result.booking.id,
+            template: "BOOKING_CONFIRMATION",
+            recipient: data.visitor_email,
+            status: visitorSent ? "SENT" : "FAILED",
+          },
+          {
+            booking_id: result.booking.id,
+            template: "BOOKING_ADMIN_NOTIFY",
+            recipient: adminEmail,
+            status: adminSent ? "SENT" : "FAILED",
+          },
+        ],
+      });
+    } catch (logError) {
+      console.warn("Failed to create email logs:", logError);
+    }
 
     return NextResponse.json({ success: true, booking_id: result.booking.id });
   } catch (error: any) {
